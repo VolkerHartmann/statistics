@@ -2,7 +2,7 @@
 ################################################################################
 # Script for collecting statistics about repo
 # Usage:
-# bash statistics.sh [github/repo] 
+# bash referrer_statistics.sh [github/repo] 
 ################################################################################
 ################################################################################
 # START DECLARATION FUNCTIONS
@@ -27,7 +27,7 @@ function checkParameters {
   fi
 
   REPOSITORY=$1
-  STATISTICS=views
+  STATISTICS=referrers
   DATE=$(date -u +%Y-%m-%d)
   WEEK=$(date -u +%V)
 }
@@ -62,7 +62,7 @@ done
 ################################################################################
 checkParameters $*
 
-printInfo "Collect views for "$REPOSITORY" at "$DATE" (week "$WEEK")"
+printInfo "Collect top referral sources for "$REPOSITORY" at "$DATE" (week "$WEEK")"
 
-gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28'  '/repos/kit-data-manager/'$REPOSITORY'/traffic/'$STATISTICS'?per=week' | jq '.views[] | "\(.timestamp);\(.count);\(.uniques)"' |xargs -L1 -I'{}' echo "$WEEK;$DATE;$REPOSITORY;{}" >> $STATISTICS_weekly.csv
+gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28'  '/repos/kit-data-manager/'$REPOSITORY'/traffic/popular/'$STATISTICS | jq '.views[] | "\(.referrer);\(.count);\(.uniques)"' |xargs -L1 -I'{}' echo "$WEEK;$DATE;$REPOSITORY;{}" >> $STATISTICS_weekly.csv
 

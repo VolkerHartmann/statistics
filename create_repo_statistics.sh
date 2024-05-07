@@ -2,7 +2,7 @@
 ################################################################################
 # Script for collecting statistics about repo
 # Usage:
-# bash statistics.sh [github/repo] 
+# bash statistics.sh [github/repo] [views|referrers]
 ################################################################################
 ################################################################################
 # START DECLARATION FUNCTIONS
@@ -11,9 +11,10 @@
 ################################################################################
 function usage {
 ################################################################################
-  echo "Script for creating statistics for github/repo."
+  echo "Script for creating statistics for multiple github/repos."
+  echo "Files listed in file './repo_list.txt' (default)"
   echo "USAGE:"
-  echo "  $0 [github/repo]"
+  echo "  $0 [file listing all repos]"
   exit 1
 }
 
@@ -21,15 +22,14 @@ function usage {
 function checkParameters {
 ################################################################################
   # Check no of parameters.
-  if [ "$#" -ne 1 ]; then
+  if [ "$#" -gt 1 ]; then
     echo "Illegal number of parameters!"
     usage
   fi
-
-  REPOSITORY=$1
-  STATISTICS=views
-  DATE=$(date -u +%Y-%m-%d)
-  WEEK=$(date -u +%V)
+  FILE_WITH_REPOS="$ACTUAL_DIR"/repo_list.txt
+  if [ "$#" -ne 0 ]; then
+    FILE_WITH_REPOS=$1
+  fi
 }
 
 ################################################################################
@@ -57,12 +57,27 @@ do
     exit 1
   fi
 done
+
+################################################################################
+# Determine directory of script. 
+################################################################################
+ACTUAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 ################################################################################
 # Check parameters
 ################################################################################
 checkParameters $*
 
-printInfo "Collect views for "$REPOSITORY" at "$DATE" (week "$WEEK")"
-
-gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28'  '/repos/kit-data-manager/'$REPOSITORY'/traffic/'$STATISTICS'?per=week' | jq '.views[] | "\(.timestamp);\(.count);\(.uniques)"' |xargs -L1 -I'{}' echo "$WEEK;$DATE;$REPOSITORY;{}" >> $STATISTICS_weekly.csv
+echo "Reading repo list from file "$FILE_WITH_REPOS
+while read line; do
+  if [[ ${line:0:1} = \# ]] ; then
+    echo "Skip repo: "$line 
+  else
+    echo "Determine statistics for repo: ${line}"
+    bash "$ACTUAL_DIR"/views_statistics.sh ${line}
+    bash "$ACTUAL_DIR"/clones_statistics.sh ${line}
+    bash "$ACTUAL_DIR"/path_statistics.sh ${line}
+    bash "$ACTUAL_DIR"/referrer_statistics.sh ${line}
+  fi
+done < "${FILE_WITH_REPOS}"
 

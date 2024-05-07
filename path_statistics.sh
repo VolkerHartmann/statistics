@@ -2,7 +2,7 @@
 ################################################################################
 # Script for collecting statistics about repo
 # Usage:
-# bash statistics.sh [github/repo] 
+# bash path_statistics.sh [github/repo] 
 ################################################################################
 ################################################################################
 # START DECLARATION FUNCTIONS
@@ -11,7 +11,7 @@
 ################################################################################
 function usage {
 ################################################################################
-  echo "Script for creating statistics for github/repo."
+  echo "Script for creating $REPO_NAME service."
   echo "USAGE:"
   echo "  $0 [github/repo]"
   exit 1
@@ -21,13 +21,13 @@ function usage {
 function checkParameters {
 ################################################################################
   # Check no of parameters.
-  if [ "$#" -ne 1 ]; then
+  if [ "$#" -ne 2 ]; then
     echo "Illegal number of parameters!"
     usage
   fi
 
   REPOSITORY=$1
-  STATISTICS=views
+  STATISTICS=$2
   DATE=$(date -u +%Y-%m-%d)
   WEEK=$(date -u +%V)
 }
@@ -62,7 +62,7 @@ done
 ################################################################################
 checkParameters $*
 
-printInfo "Collect views for "$REPOSITORY" at "$DATE" (week "$WEEK")"
+printInfo "Collect top preferral paths for "$REPOSITORY" at "$DATE" (week "$WEEK")"
 
-gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28'  '/repos/kit-data-manager/'$REPOSITORY'/traffic/'$STATISTICS'?per=week' | jq '.views[] | "\(.timestamp);\(.count);\(.uniques)"' |xargs -L1 -I'{}' echo "$WEEK;$DATE;$REPOSITORY;{}" >> $STATISTICS_weekly.csv
+gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28'  /repos/kit-data-manager/$REPOSITORY/traffic/popular/$STATISTICS | jq .'[] | "\(.path);\(.count);\(.uniques)"' |xargs -L1 -I'{}' echo "$WEEK;$DATE;$REPOSITORY;{}" >> $STATISTICS'_weekly.csv'
 
