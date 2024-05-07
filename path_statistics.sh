@@ -21,13 +21,13 @@ function usage {
 function checkParameters {
 ################################################################################
   # Check no of parameters.
-  if [ "$#" -ne 2 ]; then
+  if [ "$#" -ne 1 ]; then
     echo "Illegal number of parameters!"
     usage
   fi
 
   REPOSITORY=$1
-  STATISTICS=$2
+  STATISTICS=paths
   DATE=$(date -u +%Y-%m-%d)
   WEEK=$(date -u +%V)
 }

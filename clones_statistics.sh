@@ -64,5 +64,5 @@ checkParameters $*
 
 printInfo "Collect clones for "$REPOSITORY" at "$DATE" (week "$WEEK")"
 
-gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28'  '/repos/kit-data-manager/'$REPOSITORY'/traffic/'$STATISTICS'?per=week' | jq '.views[] | "\(.timestamp);\(.count);\(.uniques)"' |xargs -L1 -I'{}' echo "$WEEK;$DATE;$REPOSITORY;{}" >> $STATISTICS_weekly.csv
+gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28'  '/repos/kit-data-manager/'$REPOSITORY'/traffic/'$STATISTICS'?per=week' | jq '.clones[] | "\(.timestamp);\(.count);\(.uniques)"' |xargs -L1 -I'{}' echo "$WEEK;$DATE;$REPOSITORY;{}" >> $STATISTICS'_weekly.csv'
 

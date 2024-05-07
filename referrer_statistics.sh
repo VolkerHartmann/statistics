@@ -64,5 +64,5 @@ checkParameters $*
 
 printInfo "Collect top referral sources for "$REPOSITORY" at "$DATE" (week "$WEEK")"
 
-gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28'  '/repos/kit-data-manager/'$REPOSITORY'/traffic/popular/'$STATISTICS | jq '.views[] | "\(.referrer);\(.count);\(.uniques)"' |xargs -L1 -I'{}' echo "$WEEK;$DATE;$REPOSITORY;{}" >> $STATISTICS_weekly.csv
+gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28'  '/repos/kit-data-manager/'$REPOSITORY'/traffic/popular/'$STATISTICS | jq '.[] | "\(.referrer);\(.count);\(.uniques)"' |xargs -L1 -I'{}' echo "$WEEK;$DATE;$REPOSITORY;{}" >> $STATISTICS'_weekly.csv'
 
