@@ -1,0 +1,11 @@
+# List of Packages in 'kit-data-manager'
+- [collection-api/collection-api](https://github.com/orgs/kit-data-manager/packages/container/package/collection-api%2Fcollection-api)
+- [metastore2/metastore2](https://github.com/orgs/kit-data-manager/packages/container/package/metastore2%2Fmetastore2)
+- [indexing-service/indexing-service](https://github.com/orgs/kit-data-manager/packages/container/package/indexing-service%2Findexing-service)
+- [fortestonly](https://github.com/orgs/kit-data-manager/packages/container/package/fortestonly)
+- [base-repo](https://github.com/orgs/kit-data-manager/packages/container/package/base-repo)
+- [fortestonly-version_1](https://github.com/orgs/kit-data-manager/packages/container/package/fortestonly-version_1)
+- [indexing-service](https://github.com/orgs/kit-data-manager/packages/container/package/indexing-service)
+- [frontend-collection-metastore](https://github.com/orgs/kit-data-manager/packages/container/package/frontend-collection-metastore)
+- [metastore2](https://github.com/orgs/kit-data-manager/packages/container/package/metastore2)
+- [mapping-service](https://github.com/orgs/kit-data-manager/packages/container/package/mapping-service)

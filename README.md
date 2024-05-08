@@ -30,6 +30,7 @@ $ bash create_repo_statistics.sh
 ### Push Results to GitHub
 ```
 $ git add *.csv
+$ git commit -m "Add new results to files holding statistics."
 $ git push
 ```
 
@@ -40,3 +41,17 @@ To skip a repository start line with '#'
 ## Analyze Statistics
 To analyze statistics, you can import the csv files into Excel and analyze them with a pivot table
 as required.
+
+## Collect Download Counts of Packages
+Use links listed in [organization_packages](organization_packages.md) to collect download counts
+of packages. 
+
+:information_source: If the list is no longer up to date due to new package(s) create a new list:
+
+```
+$ bash create_list_of_packages.sh
+$ git add organization_packages.md
+$ git commit -m "Refresh packages list."
+$ git push
+```
+
