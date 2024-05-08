@@ -43,7 +43,7 @@ To skip a repository start line with '#'
 
 ## Analyze Statistics
 To analyze statistics, you can import the csv files into Excel and analyze them with a pivot table
-as required.
+as required. (See [example](example/AnalyzeStatisticsExample.xlsx))
 
 ## Collect Download Counts of Packages
 Use links listed in [organization_packages](organization_packages.md) to collect download counts
