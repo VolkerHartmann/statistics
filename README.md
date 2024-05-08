@@ -11,8 +11,11 @@ Use this [link](https://github.com/settings/tokens) to generate a personal acces
 at least the following rights: 
 - admin:public_key
 - read:org
+- read:packages
 - repo
+
 Copy generated link and store it in a local file (e.g.: mytoken.txt)!
+
 ### Authenticate for gh
 ```
 # Authenticate against github.com by reading the token from a file
